@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body class="bg-light">
+<div class="container mt-4 bg-white p-4 shadow-sm rounded">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Customer Management</h1>
+        <a href="../index.html" class="btn btn-outline-dark btn-sm">Back to Home</a>
+    </div>
+    <hr>
+
+    <div class="row p-3">
+        <div class="col-md-4">
+            <input type="text" id="customerId" class="form-control mb-2" placeholder="Customer Id">
+        </div>
+        <div class="col-md-4">
+            <input type="text" id="customerName" class="form-control mb-2" placeholder="Customer Name">
+        </div>
+        <div class="col-md-4">
+            <input type="text" id="customerAddress" class="form-control mb-2" placeholder="Customer Address">
+        </div>
+    </div>
+
+    <div class="p-3 text-center">
+        <button class="btn btn-primary px-4" onclick="saveCustomer()">Add Customer</button>
+        <button class="btn btn-secondary px-4" onclick="updateCustomer()">Update Customer</button>
+        <button class="btn btn-danger px-4" onclick="deleteCustomer()">Delete Customer</button>
+    </div>
+
+    <div class="p-3">
+        <table id="customerTable" class="table table-bordered table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="../js/customer.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card-custom {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+        }
+        .card-custom:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .nav-link-custom {
+            text-decoration: none !important;
+            color: inherit;
+        }
+        .icon-box {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-primary mb-5">
+    <span class="navbar-brand mb-0 h1"><i class="fas fa-shopping-cart mr-2"></i> Modern POS System</span>
+</nav>
+
+<div class="container text-center">
+    <h1 class="mb-5">Welcome to Management Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <a href="page/customer.html" class="nav-link-custom">
+                <div class="card card-custom p-4 bg-white text-primary">
+                    <div class="icon-box"><i class="fas fa-users"></i></div>
+                    <h3>Customer</h3>
+                    <p class="text-muted">Manage your client database, add, update or delete members.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a href="page/item.html" class="nav-link-custom">
+                <div class="card card-custom p-4 bg-white text-success">
+                    <div class="icon-box"><i class="fas fa-boxes"></i></div>
+                    <h3>Item</h3>
+                    <p class="text-muted">Control your inventory, set prices and monitor stock levels.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a href="page/place-order.html" class="nav-link-custom">
+                <div class="card card-custom p-4 bg-white text-danger">
+                    <div class="icon-box"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>Place Order</h3>
+                    <p class="text-muted">Generate new sales, calculate totals and process transactions.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center mt-5 py-3 text-muted">
+    <small>&copy; 2026 POS System - Built with Spring Boot & jQuery</small>
+</footer>
+
+</body>
+</html>

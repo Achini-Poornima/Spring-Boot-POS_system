@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body class="bg-light">
+<div class="container mt-4 bg-white p-4 shadow-sm rounded">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Item Management</h1>
+        <a href="../index.html" class="btn btn-outline-dark btn-sm">Back to Home</a>
+    </div>
+    <hr>
+
+    <div class="container p-3">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" id="itemId" class="form-control" placeholder="Item Id">
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="itemName" class="form-control" placeholder="Item Name">
+            </div>
+            <div class="col-md-3">
+                <input type="number" id="itemQty" class="form-control" placeholder="Item Qty">
+            </div>
+            <div class="col-md-3">
+                <input type="number" id="unitPrice" class="form-control" placeholder="Unit Price">
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-3 text-center">
+        <button class="btn btn-primary px-4" onclick="saveItem()">Add Item</button>
+        <button class="btn btn-secondary px-4" onclick="updateItem()">Update Item</button>
+        <button class="btn btn-danger px-4" onclick="deleteItem()">Delete Item</button>
+    </div>
+
+    <div class="container p-3">
+        <table id="itemTable" class="table table-bordered table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="../js/item.js"></script>
+</body>
+</html>
