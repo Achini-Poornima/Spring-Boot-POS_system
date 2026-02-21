@@ -1,4 +1,4 @@
-package org.example.posbackend.reporsitory;
+package org.example.posbackend.repository;
 
 import org.example.posbackend.entity.OrderDetails;
 import org.springframework.data.jpa.repository.JpaRepository;

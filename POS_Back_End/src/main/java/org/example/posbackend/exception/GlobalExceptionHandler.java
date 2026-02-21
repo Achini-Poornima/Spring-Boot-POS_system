@@ -13,43 +13,33 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Handles your custom business logic errors (e.g., duplicate ID, out of stock)
-    @ExceptionHandler(CustomerException.class)
-    public ResponseEntity<APIResponse<String>> handleCustomerException(CustomerException e) {
-        return new ResponseEntity<>(
-                new APIResponse<>(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null),
-                HttpStatus.BAD_REQUEST
-        );
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<APIResponse<String>> handleGeneralException(Exception e) {
+        return new ResponseEntity<>(new APIResponse<>(500, "Server Error", e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // Handles @Valid failures in DTOs
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<APIResponse<String>> handleNullPointerException(NullPointerException e) {
+        return new ResponseEntity<>(new APIResponse<>(500, "Missing Data", e.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<APIResponse<Map<String, String>>> handleValidationException(MethodArgumentNotValidException e) {
         Map<String, String> errors = new HashMap<>();
-        e.getBindingResult().getFieldErrors().forEach(err ->
-                errors.put(err.getField(), err.getDefaultMessage())
-        );
+        e.getBindingResult().getFieldErrors().forEach((err) -> {
+            errors.put(err.getField(), err.getDefaultMessage());
+        });
+        return new ResponseEntity<>(new APIResponse<>(400, "Validation Error", errors),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomerException.class)
+    public ResponseEntity<APIResponse<String>> handleCustomerException(CustomerException e) {
         return new ResponseEntity<>(
-                new APIResponse<>(HttpStatus.BAD_REQUEST.value(), "Validation Failed", errors),
+                new APIResponse<>(400, e.getMessage(), null),
                 HttpStatus.BAD_REQUEST
-        );
-    }
-
-    // Handles Null Pointers specifically
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<APIResponse<String>> handleNullPointer(NullPointerException e) {
-        return new ResponseEntity<>(
-                new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "A required data field was missing", e.getMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR
-        );
-    }
-
-    // Catch-all for any other server errors
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<APIResponse<String>> handleGeneralException(Exception e) {
-        return new ResponseEntity<>(
-                new APIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error", e.getMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 }

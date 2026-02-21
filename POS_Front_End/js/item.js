@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:8080/api/v1/item";
+// Ensure port matches your application.properties (8081)
+const BASE_URL = "http://localhost:8081/api/v1/item";
 
 $(document).ready(function () {
     getAllItems();
@@ -23,7 +24,14 @@ function saveItem() {
             clearFields();
         },
         error: function (err) {
-            alert("Error: " + (err.responseJSON ? err.responseJSON.message : "Save Failed"));
+            if (err.responseJSON && err.responseJSON.data && typeof err.responseJSON.data === 'object') {
+                let errors = err.responseJSON.data;
+                let msg = "Validation Error:\n";
+                for (let key in errors) msg += `- ${errors[key]}\n`;
+                alert(msg);
+            } else {
+                alert("Error: " + (err.responseJSON ? err.responseJSON.message : "Save Failed"));
+            }
         }
     });
 }
@@ -36,6 +44,8 @@ function updateItem() {
         unitPrice: $("#unitPrice").val()
     };
 
+    if (!itemData.itemId) return alert("Please select an item to update.");
+
     $.ajax({
         url: BASE_URL,
         method: 'PUT',
@@ -47,7 +57,7 @@ function updateItem() {
             clearFields();
         },
         error: function (err) {
-            alert("Update Failed!");
+            alert("Update Failed: " + (err.responseJSON ? err.responseJSON.message : "Server Error"));
         }
     });
 }
@@ -56,14 +66,17 @@ function deleteItem() {
     const id = $('#itemId').val();
     if (!id) return alert("Please enter or select an Item ID");
 
-    if (confirm("Delete this item?")) {
+    if (confirm("Are you sure you want to delete item: " + id + "?")) {
         $.ajax({
-            url: `${BASE_URL}?id=${id}`,
+            url: BASE_URL + "?id=" + id, // Standardized query param
             method: 'DELETE',
             success: function (res) {
                 alert(res.message);
                 getAllItems();
                 clearFields();
+            },
+            error: function (err) {
+                alert("Delete Failed: " + (err.responseJSON ? err.responseJSON.message : "Server Error"));
             }
         });
     }
@@ -75,22 +88,29 @@ function getAllItems() {
         method: 'GET',
         success: function (res) {
             $("#itemTable tbody").empty();
-            // res.data is the list of ItemDTOs from your APIResponse
-            res.data.forEach(item => {
-                const row = `<tr>
-                    <td>${item.itemId}</td>
-                    <td>${item.itemName}</td>
-                    <td>${item.qty}</td>
-                    <td>${item.unitPrice.toFixed(2)}</td>
-                    <td>
-                        <button class="btn btn-sm btn-info" 
-                            onclick="loadFields('${item.itemId}', '${item.itemName}', '${item.qty}', '${item.unitPrice}')">
-                            Edit
-                        </button>
-                    </td>
-                </tr>`;
-                $("#itemTable tbody").append(row);
-            });
+            if (res.data) {
+                res.data.forEach(item => {
+                    // Casing defense: check for itemId and itemid
+                    const id = item.itemId || item.itemid;
+                    const name = item.itemName || item.itemname;
+                    const qty = item.qty;
+                    const price = item.unitPrice || item.unitprice;
+
+                    const row = `<tr>
+                        <td>${id}</td>
+                        <td>${name}</td>
+                        <td>${qty}</td>
+                        <td>${parseFloat(price).toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info" 
+                                onclick="loadFields('${id}', '${name}', '${qty}', '${price}')">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>`;
+                    $("#itemTable tbody").append(row);
+                });
+            }
         }
     });
 }

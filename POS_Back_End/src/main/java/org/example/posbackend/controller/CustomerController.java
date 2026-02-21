@@ -1,4 +1,4 @@
-package org.example.posbackend.contoller;
+package org.example.posbackend.controller;
 
 import jakarta.validation.Valid;
 import org.example.posbackend.dto.CustomerDTO;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/v1/customer")
 public class CustomerController {

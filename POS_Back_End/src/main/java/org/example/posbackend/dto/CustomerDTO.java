@@ -1,9 +1,7 @@
 package org.example.posbackend.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CustomerDTO {
-    @NotNull(message = "ID is required")
+    @JsonProperty("cId") // Forces the JSON key to be "cId"
+    @NotBlank(message = "ID cannot be empty")
     private String cId;
 
-    @NotBlank(message = "Customer Name is required")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Customer Name is Incorrect")
+    @JsonProperty("cName")
+    @NotBlank(message = "Name cannot be empty")
+    @Pattern(regexp = "^[a-zA-Z.\\s]+$", message = "Name must contain only letters")
     private String cName;
 
-    @Size(min = 10, max = 100, message = "Address must be between 10 and 100 characters")
+    @JsonProperty("cAddress")
+    @NotBlank(message = "Address cannot be empty")
+    @Size(min = 5, max = 100, message = "Address must be between 5 and 100 characters")
     private String cAddress;
 
     public String getcId() {
