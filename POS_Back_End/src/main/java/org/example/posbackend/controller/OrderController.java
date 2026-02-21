@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
     @Autowired
-    private OrderService orderService; // Use lowerCamelCase for variable names
+    private OrderService orderService;
 
     @PostMapping
     public ResponseEntity<APIResponse<String>> placeOrder(@RequestBody OrderDTO orderDTO) {

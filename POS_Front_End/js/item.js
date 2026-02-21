@@ -1,4 +1,3 @@
-// Ensure port matches your application.properties (8081)
 const BASE_URL = "http://localhost:8081/api/v1/item";
 
 $(document).ready(function () {
@@ -68,7 +67,7 @@ function deleteItem() {
 
     if (confirm("Are you sure you want to delete item: " + id + "?")) {
         $.ajax({
-            url: BASE_URL + "?id=" + id, // Standardized query param
+            url: BASE_URL + "?id=" + id,
             method: 'DELETE',
             success: function (res) {
                 alert(res.message);
@@ -90,7 +89,6 @@ function getAllItems() {
             $("#itemTable tbody").empty();
             if (res.data) {
                 res.data.forEach(item => {
-                    // Casing defense: check for itemId and itemid
                     const id = item.itemId || item.itemid;
                     const name = item.itemName || item.itemname;
                     const qty = item.qty;

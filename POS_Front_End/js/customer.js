@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:8081/api/v1/customer";
 
 $(document).ready(function() {
-    getAllCustomers(); // Match the function name below
+    getAllCustomers();
 });
 
 function saveCustomer() {
@@ -11,7 +11,7 @@ function saveCustomer() {
         cAddress: $('#customerAddress').val()
     };
 
-    console.log("Sending Data: ", data); // Check this in F12 Console
+    console.log("Sending Data: ", data);
 
     $.ajax({
         url: "http://localhost:8081/api/v1/customer",
@@ -24,7 +24,6 @@ function saveCustomer() {
             clearFields();
         },
         error: function (err) {
-            // This will now show you EXACTLY which field failed validation
             if (err.responseJSON && err.responseJSON.data) {
                 let errors = err.responseJSON.data;
                 let errorMsg = "Validation Failed:\n";
@@ -60,7 +59,6 @@ function updateCustomer() {
         },
         error: function (err) {
             console.error("Update Error:", err);
-            // This captures the "Customer not found for update" message from your service
             alert("Update Failed: " + (err.responseJSON ? err.responseJSON.message : "Server Error"));
         }
     });
@@ -72,7 +70,6 @@ function deleteCustomer() {
 
     if (confirm("Are you sure?")) {
         $.ajax({
-            // Ensure the key 'id' matches the @RequestParam in Java
             url: BASE_URL + "?id=" + id,
             method: 'DELETE',
             success: function (res) {
@@ -81,7 +78,6 @@ function deleteCustomer() {
                 clearFields();
             },
             error: function (err) {
-                // If this triggers, check if the backend is running or if there's a CORS error
                 console.error("Delete Error:", err);
                 alert("Delete Failed: " + (err.responseJSON ? err.responseJSON.message : "Server Error"));
             }
@@ -96,11 +92,9 @@ function getAllCustomers() {
         success: function (res) {
             $("#customerTable tbody").empty();
             if(res.data) {
-                // Debug: view the actual objects in the console
                 console.table(res.data);
 
                 res.data.forEach(customer => {
-                    // Using bracket notation or checking both possibilities ensures we find the ID
                     const id = customer.cId || customer.cid;
                     const name = customer.cName || customer.cname;
                     const address = customer.cAddress || customer.caddress;

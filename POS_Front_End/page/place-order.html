@@ -6,76 +6,174 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        .total-display { font-size: 2rem; font-weight: bold; color: #dc3545; }
+        body {
+            background-color: #f1f3f6; /* Soft grey background */
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Professional Card Styling */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border-radius: 8px 8px 0 0 !important;
+            padding: 12px 20px;
+        }
+
+        /* Custom Header Colors */
+        .header-invoice { background-color: #1a3a5f; color: white; } /* Deep Navy */
+        .header-item { background-color: #2e7d32; color: white; }    /* Forest Green */
+
+        /* Input Styling */
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(26, 58, 95, 0.15);
+            border-color: #1a3a5f;
+        }
+
+        /* Cart Table */
+        .table {
+            background: white;
+            border-radius: 8px;
+        }
+
+        .table thead {
+            background-color: #f8f9fa;
+        }
+
+        .table thead th {
+            border-top: none;
+            font-size: 0.85rem;
+            color: #495057;
+            text-transform: uppercase;
+        }
+
+        /* Footer / Total Section */
+        .total-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #d32f2f; /* Red accent */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .lbl-total-text {
+            font-size: 1rem;
+            color: #757575;
+            margin-bottom: 0;
+        }
+
+        .total-display {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #d32f2f;
+        }
+
+        .btn-confirm {
+            background-color: #d32f2f;
+            border: none;
+            font-weight: 600;
+            padding: 12px 30px;
+            transition: all 0.3s;
+        }
+
+        .btn-confirm:hover {
+            background-color: #b71c1c;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body class="bg-light">
-<div class="container-fluid mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3 px-4">
-        <h1>Place Order</h1>
-        <a href="../index.html" class="btn btn-outline-dark">Back to Dashboard</a>
+
+<div class="container-fluid mt-4 px-4">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-end">
+            <div>
+                <h2 class="font-weight-bold mb-0" style="color: #1a3a5f;">Place Order</h2>
+                <p class="text-muted mb-0">Manage customer transactions and inventory</p>
+            </div>
+            <a href="../index.html" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+        </div>
     </div>
 
-    <div class="row px-3">
+    <div class="row">
         <div class="col-md-4">
-            <div class="card mb-3 shadow-sm">
-                <div class="card-header bg-primary text-white">Invoice Details</div>
+            <div class="card">
+                <div class="card-header header-invoice">Invoice Details</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6"><input type="text" id="orderId" class="form-control mb-2" placeholder="Order ID"></div>
-                        <div class="col-6"><input type="date" id="orderDate" class="form-control mb-2"></div>
+                        <div class="col-6">
+                            <label class="small font-weight-bold">Order ID</label>
+                            <input type="text" id="orderId" class="form-control mb-2" placeholder="ID">
+                        </div>
+                        <div class="col-6">
+                            <label class="small font-weight-bold">Date</label>
+                            <input type="date" id="orderDate" class="form-control mb-2">
+                        </div>
                     </div>
-                    <select id="cmbCustomerId" class="form-control mb-2">
-                        <option value="">Select Customer ID</option>
+                    <label class="small font-weight-bold mt-2">Customer ID</label>
+                    <select id="cmbCustomerId" class="form-control">
+                        <option value="">Select Customer</option>
                     </select>
-                    <input type="text" id="orderCustName" class="form-control" readonly placeholder="Customer Name">
                 </div>
             </div>
 
             <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">Item Selection</div>
+                <div class="card-header header-item">Item Selection</div>
                 <div class="card-body">
-                    <select id="cmbItemId" class="form-control mb-2">
-                        <option value="">Select Item Code</option>
+                    <label class="small font-weight-bold">Item Code</label>
+                    <select id="cmbItemId" class="form-control mb-3">
+                        <option value="">Select Item</option>
                     </select>
-                    <div class="row mb-2">
-                        <div class="col-6"><input type="text" id="orderItemName" class="form-control" readonly placeholder="Name"></div>
-                        <div class="col-6"><input type="text" id="orderItemPrice" class="form-control" readonly placeholder="Price"></div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6"><input type="text" id="orderQtyLeft" class="form-control" readonly placeholder="Qty Left"></div>
-                        <div class="col-6"><input type="number" id="buyQty" class="form-control" placeholder="Buy Qty"></div>
-                    </div>
-                    <button class="btn btn-warning btn-block" onclick="addToCart()">Add to Cart</button>
+                    <label class="small font-weight-bold">Order Quantity</label>
+                    <input type="number" id="buyQty" class="form-control mb-4" placeholder="0">
+                    <button class="btn btn-warning btn-block font-weight-bold" onclick="addToCart()">Add to Cart</button>
                 </div>
             </div>
         </div>
 
         <div class="col-md-8">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <table id="cartTable" class="table table-hover">
-                        <thead class="thead-dark">
+                <div class="card-body p-0">
+                    <table id="cartTable" class="table table-hover mb-0">
+                        <thead>
                         <tr>
-                            <th>Code</th>
+                            <th class="pl-4">Code</th>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Qty</th>
                             <th>Total</th>
+                            <th class="pr-4">Action</th>
                         </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                        </tbody>
                     </table>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="total-display">Total: <span id="lblTotal">0.00</span></div>
-                        <button class="btn btn-danger btn-lg px-5" onclick="submitOrder()">Place Order</button>
-                    </div>
                 </div>
+            </div>
+
+            <div class="total-container d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="lbl-total-text">Net Total Amount</p>
+                    <div class="total-display">LKR <span id="lblTotal">0.00</span></div>
+                </div>
+                <button class="btn btn-confirm btn-lg text-white" onclick="submitOrder()">Place Order</button>
             </div>
         </div>
     </div>
 </div>
-<script src="../js/place-order.js"></script>
+
+<script src="../js/order.js"></script>
 </body>
 </html>

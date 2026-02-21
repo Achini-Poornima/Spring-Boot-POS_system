@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CustomerDTO {
-    @JsonProperty("cId") // Forces the JSON key to be "cId"
+    @JsonProperty("cId")
     @NotBlank(message = "ID cannot be empty")
     private String cId;
 

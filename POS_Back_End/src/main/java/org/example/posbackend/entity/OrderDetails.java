@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Auto-generated primary key for detail lines
+    private Long id;
     private String oid;
     private String itemId;
     private int qty;
